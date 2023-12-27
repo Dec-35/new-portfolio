@@ -3,9 +3,8 @@
   margin-bottom: 1rem;
 }
 
-.topContainer,
 .bottomContainer {
-  gap: 8px;
+  gap: 4px;
 }
 
 .bottomContainer {
@@ -142,6 +141,22 @@ h3 {
 
     > h3 {
       transform: rotate(30deg);
+    }
+  }
+}
+
+//second part
+
+.bottomContainer {
+  .categoryContent {
+    background-color: rgb(37, 38, 39);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    * {
+      color: white;
+      text-decoration: none;
     }
   }
 }

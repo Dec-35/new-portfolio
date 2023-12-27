@@ -3,9 +3,8 @@
   margin-bottom: 1rem;
 }
 
-.topContainer,
 .bottomContainer {
-  gap: 8px;
+  gap: 4px;
 }
 
 .bottomContainer {
@@ -126,4 +125,15 @@ h3 {
 }
 #projectsContainer .project > h3 {
   transform: rotate(30deg);
+}
+
+.bottomContainer .categoryContent {
+  background-color: rgb(37, 38, 39);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.bottomContainer .categoryContent * {
+  color: white;
+  text-decoration: none;
 }/*# sourceMappingURL=home.css.map */
