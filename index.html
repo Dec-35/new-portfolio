@@ -7,21 +7,37 @@
     <link rel="stylesheet" href="./assets/css/common.css" />
     <link rel="stylesheet" href="./assets/css/home.css" />
   </head>
-  <body>
+  <body data-theme="light">
     <div class="globalContainer hiFlex">
       <div class="topContainer longFlex">
-        <div id="profileContainer" class="hiFlex">
-          <div class="categoryContent hiFlex">
+        <div id="profileContainer" class="hiFlex mainCategoryContainer">
+          <div class="categoryContent longFlex">
+            <div class="profileContent hiFlex">
+              <h1>Mériadec Legal</h1>
+              <h2>Etudiant en BUT informatique à Laval</h2>
+
+              <p>
+                Bonjour ! Je suis un développeur web full stack et UI/UX
+                designer. J'adore travailler sur des interfaces et des systèmes
+                web complexes.
+              </p>
+            </div>
             <img
+              onclick="showProfileInfo(this.parentElement.parentElement)"
               src="https://cdn.discordapp.com/attachments/817446248507244574/1189372884607569931/CE54100E-8367-46C0-B2A1-C49C023B2365_1_105_c.jpeg?ex=659decd1&is=658b77d1&hm=7bfef313f65bcdd121f8f2e3fb6acda9fe0682641853cacd0b8a72f86f69b67d&"
               class="splashPhoto"
             />
-            <h1>Mériadec</h1>
+            <div class="gradient"></div>
+            <h1 id="firstname">Mériadec</h1>
           </div>
           <h2>Qui suis-je ?</h2>
         </div>
-        <div id="projectsContainer" class="hiFlex">
-          <div class="categoryContent">
+        <div
+          id="projectsContainer"
+          onclick="closeProfileInfo(document.getElementById('profileContainer'))"
+          class="hiFlex mainCategoryContainer active"
+        >
+          <div class="categoryContent" id="projectsFrameContainer">
             <div id="projectsFrame" class="hiFlex">
               <div class="project">
                 <h3>Site web</h3>
@@ -51,8 +67,8 @@
         </div>
         <div id="contactContainer" class="justifiedContainer hiFlex">
           <h2>Contact</h2>
-          <div class="hiFlex center categoryContent">
-            <a href="tel:0766696317">(+33) 07 66 69 63 17</a>
+          <div class="longFlex center categoryContent">
+            <a id="phoneNumber" href="tel:0766696317">(+33) 07 66 69 63 17</a>
             <a
               href="mailto:meriadec@m-legal.fr"
               class="contactIcon"
@@ -82,4 +98,31 @@
       </div>
     </div>
   </body>
+  <script>
+    function showProfileInfo(element) {
+      element.classList.toggle('active');
+      document.getElementById('projectsContainer').classList.toggle('active');
+    }
+
+    function closeProfileInfo(element) {
+      element.classList.remove('active');
+      document.getElementById('projectsContainer').classList.add('active');
+    }
+
+    function applyProjectsSize() {
+      const frame = document.getElementById('projectsContainer');
+      const projects = document.getElementById('projectsFrame');
+
+      const frameWidth = frame.offsetWidth;
+      const frameHeight = frame.offsetHeight;
+
+      const calculatedWidth = Math.sqrt(frameWidth ** 2 + frameHeight ** 2);
+
+      projects.style.setProperty('--width-length', calculatedWidth + 'px');
+      projects.style.setProperty('--height-length', calculatedWidth + 'px');
+    }
+
+    window.addEventListener('resize', applyProjectsSize);
+    applyProjectsSize();
+  </script>
 </html>

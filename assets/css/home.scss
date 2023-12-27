@@ -16,8 +16,8 @@
 }
 
 h2 {
-  color: #000;
-  font-family: Montserrat;
+  color: var(--font-color);
+  font-family: roboto;
   font-size: 16px;
   font-weight: 600;
   margin: 4px 0;
@@ -25,6 +25,7 @@ h2 {
 
 h3 {
   font-weight: 500;
+  color: var(--font-color);
 }
 
 .topContainer {
@@ -33,18 +34,115 @@ h3 {
   }
 }
 
+.mainCategoryContainer {
+  transition: width ease 0.6s;
+}
+
 // profile
 
 #profileContainer {
   width: 30%;
   height: 100%;
+
+  &.active {
+    width: 90%;
+
+    .splashPhoto {
+      width: 50%;
+      cursor: not-allowed;
+      box-shadow: 1px 0 10px -2px #757575ba;
+    }
+
+    .gradient {
+      opacity: 0;
+    }
+
+    .profileContent {
+      width: 70%;
+      padding: 2rem;
+
+      * {
+        animation: fadeIn ease 0.3s 0.6s forwards;
+      }
+    }
+
+    ~ #projectsContainer {
+      width: 10%;
+      #projectsFrameContainer {
+        opacity: 0.8;
+        filter: blur(5px);
+      }
+    }
+
+    #firstname {
+      opacity: 0;
+      width: 100%;
+      left: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
   .categoryContent {
     position: relative;
     height: 200px;
     flex-grow: 1;
   }
 
-  h1 {
+  .profileContent {
+    width: 0px;
+    overflow: hidden;
+    transition: width ease 0.4s;
+    justify-content: center;
+    gap: 1rem;
+
+    * {
+      opacity: 0;
+      transition: opacity ease 0.3s;
+    }
+
+    h1 {
+      font-size: 50px;
+      font-weight: 700;
+      font-family: Montserrat;
+      text-align: left;
+      color: #2d2d2d;
+    }
+
+    h2 {
+      text-align: left;
+      margin-bottom: 2rem;
+      color: #535353;
+    }
+  }
+
+  .gradient {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    transition: opacity ease 0.3s;
+    bottom: 0;
+    opacity: 0.8;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(103, 103, 103, 0) 0%,
+      rgba(49, 49, 49, 0.9) 100%
+    );
+  }
+
+  #firstname {
+    pointer-events: none;
+
+    opacity: 1;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -54,13 +152,19 @@ h3 {
     font-size: 53px;
     font-weight: 700;
     margin-bottom: 1rem;
+    user-select: none;
+    transition: opacity ease 0.3s;
   }
 }
 
 .splashPhoto {
   width: 100%;
+  transition: width ease 0.5s;
   height: 100%;
   object-fit: cover;
+  flex-grow: 1;
+  cursor: pointer;
+  box-shadow: 1px 0 0px rgba(255, 255, 255, 0);
 }
 
 //projects
@@ -68,20 +172,24 @@ h3 {
 #projectsContainer {
   flex-grow: 1;
 
-  .categoryContent {
+  #projectsFrameContainer {
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    filter: blur(0px);
+    transition: filter ease 0.3s, opacity ease 0.3s;
+    opacity: 1;
   }
 
   #projectsFrame {
     transform-origin: center;
     position: absolute;
     transform: rotate(-30deg);
-    height: calc(100% * sqrt(2) * 1.5);
-    width: calc(100% * sqrt(2) / 1.2);
+    width: var(--width-length);
+    height: var(--height-length);
+    transition: width ease 0.4s, height ease 0.4s;
   }
 
   .project {
@@ -92,6 +200,7 @@ h3 {
     align-items: center;
     justify-content: center;
     transition: height ease 0.4s;
+    box-shadow: 0 -1px 10px #757575ba;
 
     h3 {
       opacity: 0;
@@ -99,16 +208,17 @@ h3 {
       position: relative;
       text-transform: uppercase;
       font-family: montserrat;
-      font-weight: 500;
+      font-weight: 700;
       font-size: 40px;
-      color: black;
+      text-shadow: 0 0 10px rgba(71, 71, 71, 0.527);
     }
 
     &:nth-child(1) {
       background-position: left;
       background-image: url('https://cdn.discordapp.com/attachments/817446248507244574/1189390469210329230/image.png?ex=659dfd31&is=658b8831&hm=229dfb7e38d53e5f9f3251b99f566a0f0889a5c6b1aaea9c04fcb1e90e7e18f2&');
       h3 {
-        margin-right: 50%;
+        margin-right: 40%;
+        margin-top: 10%;
       }
     }
 
@@ -128,19 +238,23 @@ h3 {
       background-image: url('https://cdn.discordapp.com/attachments/817446248507244574/1189398458981957702/image.png?ex=659e04a2&is=658b8fa2&hm=0df04f429998cb51ea94c6f5c0c80e58a68eb8d7e71298fe4b89dfce0fc6e333&');
       h3 {
         margin-left: 40%;
-      }
-    }
-
-    &:hover {
-      height: 200%;
-
-      h3 {
-        opacity: 1;
+        margin-bottom: 10%;
       }
     }
 
     > h3 {
       transform: rotate(30deg);
+    }
+  }
+  &.active .project {
+    &:hover {
+      height: 200%;
+      cursor: url('data:image/svg+xml;utf8,<svg width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"><defs></defs><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"><g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-464.000000, -1087.000000)" fill="#aaa"><path d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z" id="plus-circle" sketch:type="MSShapeGroup"></path></g></g></svg>'),
+        pointer;
+
+      h3 {
+        opacity: 1;
+      }
     }
   }
 }
@@ -159,4 +273,84 @@ h3 {
       text-decoration: none;
     }
   }
+}
+
+//contact
+
+#contactContainer {
+  .categoryContent {
+    align-content: center;
+    gap: 1rem;
+  }
+
+  #phoneNumber {
+    flex-grow: 1;
+    width: 100%;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--bg-color-2);
+    transition: color ease 0.3s, opacity ease 0.3s;
+
+    opacity: 0.8;
+
+    &:hover {
+      color: var(--bg-color);
+      opacity: 1;
+    }
+  }
+}
+
+.contactIcon {
+  width: 50px;
+  height: 50px;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  transition: background-color ease 0.3s, opacity ease 0.3s;
+  cursor: pointer;
+  background-color: var(--bg-color-2);
+  opacity: 0.8;
+
+  &:hover {
+    animation: pulse ease 0.3s forwards;
+    background-color: var(--bg-color);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+#mailIcon {
+  mask-image: url('../graphics/mail-plus-svgrepo-com.svg');
+  -webkit-mask-image: url('../graphics/mail-plus-svgrepo-com.svg');
+}
+
+#linkedinIcon {
+  mask-image: url('../graphics/linkedin-svgrepo-com.svg');
+  -webkit-mask-image: url('../graphics/linkedin-svgrepo-com.svg');
+}
+
+#githubIcon {
+  mask-size: 75%;
+  mask-image: url('../graphics/github-svgrepo-com.svg');
+  -webkit-mask-image: url('../graphics/github-svgrepo-com.svg');
+}
+
+#discordIcon {
+  mask-image: url('../graphics/discord-svgrepo-com.svg');
+  -webkit-mask-image: url('../graphics/discord-svgrepo-com.svg');
 }
